@@ -26,12 +26,25 @@ function aggiungiUtente($user): bool{
 }
 
 function mediaRecenti($nMedia, $tipo){
-
+    $mediaList = array();
+    global $conn;
     if($tipo===0){
-        global $conn;
         $result = $conn->query("SELECT media.pathfile FROM media ORDER BY id DESC LIMIT $nMedia");
-
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $mediaList[] = $row;
+            }
+        }
+    }else{
+        $result = $conn->query("SELECT media.pathfile FROM media WHERE media.id_tipo=$tipo ORDER BY id DESC LIMIT $nMedia");
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $mediaList[] = $row;
+            }
+        }
     }
+    return $mediaList;
+
 
 
 }
