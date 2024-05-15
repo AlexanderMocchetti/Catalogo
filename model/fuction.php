@@ -44,8 +44,37 @@ function mediaRecenti($nMedia, $tipo){
         }
     }
     return $mediaList;
-
-
-
 }
+function mediaTotali(){
+    $mediaList = array();
+    global $conn;
+    $result = $conn->query("SELECT media.pathfile FROM media ");
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $mediaList[] = $row;
+        }
+    }
+
+    return $mediaList;
+}
+
+function addMedia( $name, $file_path, $id_tipo, $titolo) {
+    global $conn;
+    $sql = "INSERT INTO media (name, file_path, id_tipo, titolo) 
+            VALUES ('$name', '$file_path', $id_tipo, '$titolo')";
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function delete( $id) {
+    global $conn;
+    $sql = "DELETE FROM media WHERE id = $id";
+    if ($conn->query($sql) === TRUE) {
+        return true;
+        return false;
+    }
+}
+
 ?>
