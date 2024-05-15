@@ -48,7 +48,7 @@ function mediaRecenti($nMedia, $tipo){
 function mediaTotali(){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.pathfile FROM media ");
+    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media ");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $mediaList[] = $row;
@@ -76,5 +76,20 @@ function delete( $id) {
         return false;
     }
 }
+
+
+function cercaNome($nome){
+    $mediaList = array();
+    global $conn;
+    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media WHERE media.titolo='$nome'");
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $mediaList[] = $row;
+        }
+    }
+
+    return $mediaList;
+}
+
 
 ?>
