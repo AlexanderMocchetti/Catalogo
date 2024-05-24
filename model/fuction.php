@@ -73,8 +73,8 @@ function delete( $id) {
     $sql = "DELETE FROM media WHERE id = $id";
     if ($conn->query($sql) === TRUE) {
         return true;
-        return false;
     }
+    return false;
 }
 
 
