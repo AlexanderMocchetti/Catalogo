@@ -29,14 +29,18 @@ function mediaRecenti($nMedia, $tipo){
     $mediaList = array();
     global $conn;
     if($tipo===0){
-        $result = $conn->query("SELECT media.pathfile FROM media ORDER BY id DESC LIMIT $nMedia");
+        $result = $conn->query("SELECT media.titolo, utente.username, media.pathfile 
+                                    FROM media JOIN utente on media.id_utente=utente.id 
+                                    ORDER BY id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $mediaList[] = $row;
             }
         }
     }else{
-        $result = $conn->query("SELECT media.pathfile FROM media WHERE media.id_tipo=$tipo ORDER BY id DESC LIMIT $nMedia");
+        $result = $conn->query("SELECT media.titolo, utente.username, media.pathfile 
+                                    FROM media JOIN utente on media.id_utente=utente.id 
+                                    WHERE media.id_tipo=$tipo ORDER BY id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $mediaList[] = $row;
@@ -48,7 +52,8 @@ function mediaRecenti($nMedia, $tipo){
 function mediaTotali(){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media ");
+    $result = $conn->query("SELECT media.titolo, utente.username, media.pathfile 
+                                    FROM media JOIN utente on media.id_utente=utente.id  ");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $mediaList[] = $row;
