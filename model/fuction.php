@@ -96,8 +96,18 @@ function crono($user_id, $file_id) {
     $file_id;
     $sql = "INSERT INTO cronologia (id_utente,id_media, data) VALUES ($user_id, $file_id, NOW())";
     return $conn->query($sql);
-
 }
+function cercagenere($genere){
+    $mediaList = array();
+    global $conn;
+    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media JOIN genere on media.id_genere=genere.id WHERE genere.nome='$genere'");
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $mediaList[] = $row;
+        }
+    }
 
+    return $mediaList;
+}
 
 ?>
