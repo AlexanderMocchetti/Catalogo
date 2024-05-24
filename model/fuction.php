@@ -60,7 +60,7 @@ function mediaTotali(){
 
 function addMedia( $name, $file_path, $id_tipo, $titolo) {
     global $conn;
-    $sql = "INSERT INTO media (name, file_path, id_tipo, titolo) 
+    $sql = "INSERT INTO media (name, pathfile, id_tipo, titolo) 
             VALUES ('$name', '$file_path', $id_tipo, '$titolo')";
     if ($conn->query($sql) === TRUE) {
         return true;
