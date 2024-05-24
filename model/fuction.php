@@ -90,6 +90,14 @@ function cercaNome($nome){
 
     return $mediaList;
 }
+function crono($user_id, $file_id) {
+    global $conn;
+    $user_id;
+    $file_id;
+    $sql = "INSERT INTO cronologia (id_utente,id_media, data) VALUES ($user_id, $file_id, NOW())";
+    return $conn->query($sql);
+
+}
 
 
 ?>
