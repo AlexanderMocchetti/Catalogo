@@ -58,10 +58,10 @@ function mediaTotali(){
     return $mediaList;
 }
 
-function addMedia( $name, $file_path, $id_tipo, $titolo) {
+function addMedia( $file_path, $id_tipo, $titolo, $id_ut, $id_gen, $data) {
     global $conn;
-    $sql = "INSERT INTO media (name, pathfile, id_tipo, titolo) 
-            VALUES ('$name', '$file_path', $id_tipo, '$titolo')";
+    $sql = "INSERT INTO media (id_utente, id_genere,pathfile, id_tipo, titolo, creation_date) 
+            VALUES ('$id_ut','$id_gen', '$file_path', $id_tipo, '$titolo','$data')";
     if ($conn->query($sql) === TRUE) {
         return true;
     } else {
@@ -78,10 +78,10 @@ function delete( $id) {
 }
 
 
-function cercaNome($nome){
+function cercaNome($titolo){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media WHERE media.titolo='$nome'");
+    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media WHERE media.titolo='$titolo'");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $mediaList[] = $row;
