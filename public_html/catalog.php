@@ -1,5 +1,6 @@
 <?php
 require_once "../config/constants.php";
+require_once "../config/fuction.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,8 +82,8 @@ require_once "../config/constants.php";
             $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, VIDEO);
 
             while ($media = array_shift($medias)) {
-                $title = $media['title'];
-                $pathfile = 'https://assets.fantagita.site/'.$media['pathfile'];
+                $titolo = $media['titolo'];
+                $pathfile = 'media/'.$titolo.'-'.$media['pathfile'];
                 $image_pathfile = $media['image_pathfile'];
                 if ($image_pathfile === null)
                     $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
@@ -97,7 +98,7 @@ require_once "../config/constants.php";
                     </div>
                     <div class="video__details">
                         <div class="title">
-                            <h3><?=$title?></h3>
+                            <h3><?=$titolo?></h3>
                             <a href=""><?=$username_creator?></a>
                             <span><?=$creation_date?></span>
                         </div>

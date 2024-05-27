@@ -1,3 +1,9 @@
+<?php
+require_once "../config/constants.php";
+
+$titolo = $_GET['titolo'];
+$pathfile = '/assets/'.$_GET['pathfile'].'.mp4';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huborto</title>
-    <link rel="stylesheet" href="media.css">
+    <link rel="stylesheet" href="/media.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 </head>
@@ -14,7 +20,7 @@
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="#"><img src="/images/Logo%20Huborto.png" alt="Logo"></a>
         <a href="#">
             <h1>Hub<span>orto</span></h1>
         </a>
@@ -71,8 +77,8 @@
         <hr />
     </div>
     <div class="video">
-        <video src="esempio video progetto info.mp4" controls autoplay></video>
-        <h2>titolo</h2>
+        <video src="<?=$pathfile?>" controls autoplay></video>
+        <h2><?=$titolo?></h2>
     </div>
 
 </body>

@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteBase /
+
+RewriteRule ^media/([^/]+)-([^/]+)$ media.php?titolo=$1&pathfile=$2 [L,QSA]
