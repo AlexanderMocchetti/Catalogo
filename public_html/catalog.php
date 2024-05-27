@@ -1,3 +1,6 @@
+<?php
+require_once "../config/constants.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,25 +78,35 @@
     <div class="videos">
         <div class="videos__container">
             <?php
+            $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, VIDEO);
+
+            while ($media = array_shift($medias)) {
+                $title = $media['title'];
+                $pathfile = 'https://assets.fantagita.site/'.$media['pathfile'];
+                $image_pathfile = $media['image_pathfile'];
+                if ($image_pathfile === null)
+                    $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
+                $username_creator = $media['username'];
+                $creation_date = $media['creation_date'];
             ?>
             <!-- Single Video starts -->
-            <div class="video">
-                <div class="video__thumbnail">
-                    <img src="https://img.youtube.com/vi/PpXUTUXU7Qc/maxresdefault.jpg" alt="" />
-                </div>
-                <div class="video__details">
-                    <div class="title">
-                        <h3>
-                            Top 5 Programming Languages to Learn in 2021 | Best Programming Languages to Learn
-                        </h3>
-                        <a href="">FutureCoders</a>
-                        <span>10M Views • 3 Months Ago</span>
+            <a href="<?=$pathfile?>">
+                <div class="video">
+                    <div class="video__thumbnail">
+                        <img src="<?=$image_pathfile?>" alt="" />
+                    </div>
+                    <div class="video__details">
+                        <div class="title">
+                            <h3><?=$title?></h3>
+                            <a href=""><?=$username_creator?></a>
+                            <span><?=$creation_date?></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             <!-- Single Video Ends -->
             <?php
-
+            }
             ?>
 
             <!-- Single Video starts -->

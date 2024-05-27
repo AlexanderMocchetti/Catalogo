@@ -28,9 +28,13 @@ function aggiungiUtente($user): bool{
 function mediaRecenti($nMedia, $tipo){
     $mediaList = array();
     global $conn;
+
+    //TODO: add type in query
     if($tipo===0){
-        $result = $conn->query("SELECT media.titolo, utente.username, media.pathfile 
-                                    FROM media JOIN utente on media.id_utente=utente.id 
+        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile, 
+                                    media.creation_date as creation_date, media.image_pathfile as image_pathfile, genere.nome as genere
+                                    FROM media JOIN utente on media.id_utente=utente.id
+                                    JOIN genere ON genere.id=media.id_genere
                                     ORDER BY id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -38,8 +42,10 @@ function mediaRecenti($nMedia, $tipo){
             }
         }
     }else{
-        $result = $conn->query("SELECT media.titolo, utente.username, media.pathfile 
+        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
+                                    media.creation_date as creation_date, media.image_pathfile as image_pathfile, genere.nome as genere
                                     FROM media JOIN utente on media.id_utente=utente.id 
+                                    JOIN genere ON media.id_genere=genere.id
                                     WHERE media.id_tipo=$tipo ORDER BY id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
