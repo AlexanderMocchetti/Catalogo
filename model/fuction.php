@@ -131,7 +131,9 @@ function quantevisual($mediaId) {
 
 function vedivisual($idutente){
     global $conn;
-    $query = "SELECT media.titolo, media.pathfile FROM media JOIN cronologia ON media.id = cronologia.id_media WHERE cronologia.id_utente = $idutente";
+    $query = "SELECT media.titolo, media.pathfile
+              FROM media JOIN cronologia ON media.id = cronologia.id_media
+              WHERE cronologia.id_utente = $idutente";
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
         $videovisti = array();
