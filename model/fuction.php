@@ -115,7 +115,7 @@ function cercagenere($genere){
     return $mediaList;
 }
 
-function vedivisual($mediaId) {
+function quantevisual($mediaId) {
     global $conn;
     $sql = "SELECT COUNT(*) as view_count FROM cronologia WHERE id_media = $mediaId";
     $result = $conn->query($sql);
@@ -124,6 +124,21 @@ function vedivisual($mediaId) {
         return $row['view_count'];
     } else {
         return 0;
+    }
+}
+
+
+
+function vedivisual($idutente){
+    global $conn;
+    $query = "SELECT media.titolo, media.pathfile FROM media JOIN cronologia ON media.id = cronologia.id_media WHERE cronologia.id_utente = $idutente";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $videovisti = array();
+        while ($row = $result->fetch_assoc()) {
+            $videovisti[] = $row;
+        }
+        return $videovisti;
     }
 }
 
