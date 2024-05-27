@@ -14,7 +14,7 @@
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="Logo Huborto.png" alt="Logo"></a>
+        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
         <a href="#">
             <h1>Hub<span>orto</span></h1>
         </a>
@@ -74,6 +74,8 @@
 
     <div class="videos">
         <div class="videos__container">
+            <?php
+            ?>
             <!-- Single Video starts -->
             <div class="video">
                 <div class="video__thumbnail">
@@ -90,6 +92,9 @@
                 </div>
             </div>
             <!-- Single Video Ends -->
+            <?php
+
+            ?>
 
             <!-- Single Video starts -->
             <div class="video">

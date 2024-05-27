@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huborto</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="media.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 </head>
@@ -14,21 +14,21 @@
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="Logo Huborto.png" alt="Logo"></a>
+        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
         <a href="#">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>
 
-    <!-- <div class="header__search">
-        <form action=""> TODO add action
+    <div class="header__search">
+        <form action=""> <!--TODO add action-->
             <input placeholder="Cosa vuoi guardare?" class="search" name="text" type="text">
         </form>
-    </div> -->
+    </div>
 
     <div class="header__icons">
-        <a href="catalog.html"><i class="material-icons">home</i></a>
-        <a href="catalog.html"><i class="material-icons">apps</i></a>
+        <a href="#"><i class="material-icons">home</i></a>
+        <a href="catalog.php"><i class="material-icons">apps</i></a>
         <a href="login.html"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
@@ -36,26 +36,9 @@
 
 <!-- Main Body Starts -->
 <div class="mainBody">
-
-    <div class="glass-container">
-        <div class="login-box">
-            <h2>Accedi</h2>
-            <form action="#" method="POST">
-
-                <input type="email" id="email" name="email" required placeholder="Inserisci email">
-
-                <input type="password" id="password" name="password" required placeholder="Inserisci password">
-
-
-                <button type="submit">Accedi</button>
-
-                <p>Non hai un account?<a href="register.html" id="register"> Registrati</a></p>
-            </form>
-        </div>
-    </div>
     <!-- Sidebar Starts -->
 
-    <!-- <div class="sidebar">
+    <div class="sidebar">
         <div class="sidebar__categories">
             <div class="sidebar__category">
                 <i class="material-icons">movie</i>
@@ -70,7 +53,7 @@
                 <span>In arrivo...</span>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="sidebar__categories">
             <div class="sidebar__category">
                 <i class="material-icons">local_fire_department</i>
@@ -85,25 +68,13 @@
                 <span>Da non perdere</span>
             </div>
         </div>
-        <hr/>
-    </div> -->
+        <hr />
+    </div>
+    <div class="video">
+        <video src="esempio video progetto info.mp4" controls autoplay></video>
+        <h2>titolo</h2>
+    </div>
 
-
-    <!-- <div class="video">
-        <div class="video__thumbnail">
-          <img src="https://img.youtube.com/vi/YpTmcCBBdTE/maxresdefault.jpg" alt="" />
-        </div>
-        <div class="video__details">
-          <div class="author">
-            <img src="profile.png" alt="" />
-          </div>
-          <div class="title">
-            <h3>Build A Password Generator with React JS - Beginners Tutorial</h3>
-            <a href="">FutureCoders</a>
-            <span>10M Views • 3 Months Ago</span>
-          </div>
-        </div>
-      </div> -->
 </body>
 
 </html>
