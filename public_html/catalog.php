@@ -10,6 +10,8 @@ require_once "../config/constants.php";
 require_once "../config/fuction.php";
 
 $text = $_GET["text"] ?? "";
+$tipo = $GET["tipo"] ?? 0;
+$filter = $_GET["filter"] ?? "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,14 +55,18 @@ $text = $_GET["text"] ?? "";
 
     <div class="sidebar">
         <div class="sidebar__categories">
-            <div class="sidebar__category">
-                <i class="material-icons">movie</i>
-                <span>Film</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">music_note</i>
-                <span>Musica</span>
-            </div>
+            <a href="/catalog.php?tipo=<?=VIDEO?>">
+                <div class="sidebar__category">
+                    <i class="material-icons">movie</i>
+                    <span>Film</span>
+                </div>
+            </a>
+            <a href="/catalog.php?tipo=<?=AUDIO?>">
+                <div class="sidebar__category">
+                    <i class="material-icons">music_note</i>
+                    <span>Musica</span>
+                </div>
+            </a>
             <div class="sidebar__category">
                 <i class="material-icons">upcoming</i>
                 <span>In arrivo...</span>
@@ -89,7 +95,7 @@ $text = $_GET["text"] ?? "";
         <div class="videos__container">
             <?php
             if ($text === "")
-                $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, VIDEO);
+                $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, $tipo);
             else
                 $medias = cercaNome($text);
 
@@ -113,7 +119,7 @@ $text = $_GET["text"] ?? "";
                         <div class="title">
                             <h3><?=$titolo?></h3>
                             <a href=""><?=$username_creator?></a>
-                            <span><?=$views?> • <?=$creation_date?></span>
+                            <span><?=$views?> Views • <?=$creation_date?></span>
                         </div>
                     </div>
                 </div>

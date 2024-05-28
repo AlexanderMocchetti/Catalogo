@@ -1,7 +1,9 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["user_id"])) {
+$user_id = $_SESSION["user_id"] ?? -1;
+
+if ($user_id === -1) {
     header("Location: /login.php");
     die;
 }
@@ -9,7 +11,6 @@ if (!isset($_SESSION["user_id"])) {
 require_once "../config/constants.php";
 require_once "../config/fuction.php";
 
-$text = $_GET["text"] ?? "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,11 +89,7 @@ $text = $_GET["text"] ?? "";
     <div class="videos">
         <div class="videos__container">
             <?php
-            if ($text === "")
-                $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, VIDEO);
-            else
-                $medias = cercaNome($text);
-
+            $medias = vedivisual($user_id);
             while ($media = array_shift($medias)) {
                 $titolo = $media['titolo'];
                 $pathfile = 'media/'.$titolo.'-'.$media['pathfile'];
@@ -101,6 +98,7 @@ $text = $_GET["text"] ?? "";
                     $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
                 $username_creator = $media['username'];
                 $creation_date = $media['creation_date'];
+                $views = quantevisual($media['id']);
             ?>
             <!-- Single Video starts -->
             <a href="<?=$pathfile?>">
@@ -112,7 +110,7 @@ $text = $_GET["text"] ?? "";
                         <div class="title">
                             <h3><?=$titolo?></h3>
                             <a href=""><?=$username_creator?></a>
-                            <span><?=$creation_date?></span>
+                            <span><?=$views?> Views • <?=$creation_date?></span>
                         </div>
                     </div>
                 </div>

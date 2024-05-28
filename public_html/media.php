@@ -13,7 +13,7 @@ require_once "../config/fuction.php";
 
 $titolo = $_GET['titolo'];
 $pathfile = '/assets/'.$_GET['pathfile'].'.mp4';
-crono($user_id, get_media_id($pathfile));
+crono($user_id, get_media_id($_GET["pathfile"]));
 ?>
 <!DOCTYPE html>
 <html lang="en">

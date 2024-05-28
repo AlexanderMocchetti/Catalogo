@@ -7,3 +7,5 @@ const AUDIO = 2;
 const DEFAULT_IMAGE_THUMBNAIL = "https://static-00.iconduck.com/assets.00/video-x-generic-icon-826x1024-nep6hj82.png";
 
 const UPLOAD_DIR = "/var/www/catalogo/public_html/assets";
+
+const POPULAR = 1;
