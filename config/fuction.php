@@ -1,13 +1,15 @@
 <?php
 require_once "connect.php";
 
-function credenzialiValide($user): bool {
+function credenzialiValide($user): bool|int {
     global $conn;
     $email = $user["email"];
     $password = $user["password"];
     $password = md5($password);
     $result = $conn->query("SELECT id FROM utente WHERE email='$email' AND password='$password'");
-    return $result->num_rows > 0;
+    if ($result->num_rows > 0)
+        return $result->fetch_assoc()["id"];
+    return false;
 }
 function presente($user): bool{
     global $conn;
@@ -29,7 +31,7 @@ function mediaRecenti($nMedia, $tipo = 0){
     $mediaList = array();
     global $conn;
 
-    //TODO: add type in query
+    //TODO: add type return in query
     if($tipo===0){
         $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile, 
                                     media.creation_date as creation_date, media.image_pathfile as image_pathfile, genere.nome as genere

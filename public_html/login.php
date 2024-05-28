@@ -1,3 +1,37 @@
+<?php
+session_start();
+
+// TODO: change location from .php file to route
+if (isset($_SESSION["user_id"])) {
+    header("Location: /catalog.php");
+    die;
+}
+
+require_once "../config/fuction.php";
+$error_msg = false;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    $user = array("email" => $email,
+        "password" => $password
+    );
+
+    if (presente($user)) {
+        $error_msg = true;
+        $msg = "Utente non esistente";
+    } else if ($user_id = credenzialiValide($user)) {
+        $_SESSION["user_id"] = $user_id;
+        header("Location: catalog.php");
+        die;
+    } else {
+        $error_msg = true;
+        $msg = "Email o password incorretta";
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,9 +82,13 @@
 
 
                 <button type="submit">Accedi</button>
-
-                <p>Non hai un account?<a href="register.html" id="register"> Registrati</a></p>
+                <p>Non hai un account?<a href="register.php" id="register"> Registrati</a></p>
             </form>
+            <p><?php
+                if ($error_msg) {
+                    echo $msg;
+                }
+                ?></p>
         </div>
     </div>
     <!-- Sidebar Starts -->

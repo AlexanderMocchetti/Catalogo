@@ -1,3 +1,15 @@
+<?php
+//TODO: rename fuction.php
+require_once "../config/fuction.php";
+
+$error_msg = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +34,7 @@
     <div class="header__icons">
         <a href="catalog.php"><i class="material-icons">home</i></a>
         <a href="catalog.php"><i class="material-icons">apps</i></a>
-        <a href="login.html"><i class="material-icons display-this">account_circle</i></a>
+        <a href="login.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->
@@ -37,12 +49,14 @@
 
                 <input type="email" id="email" name="email" required placeholder="Inserisci email">
 
+                <input type="text" id="username" name="username" required placeholder="Inserisci username">
+
                 <input type="password" id="password" name="password" required placeholder="Inserisci password">
 
 
                 <button type="submit">Registrati</button>
 
-                <p>Hai già un account?<a href="login.html" id="login"> Login</a></p>
+                <p>Hai già un account?<a href="login.php" id="login"> Login</a></p>
             </form>
         </div>
     </div>

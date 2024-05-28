@@ -35,7 +35,7 @@ $pathfile = '/assets/'.$_GET['pathfile'].'.mp4';
     <div class="header__icons">
         <a href="#"><i class="material-icons">home</i></a>
         <a href="catalog.php"><i class="material-icons">apps</i></a>
-        <a href="login.html"><i class="material-icons display-this">account_circle</i></a>
+        <a href="login.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->

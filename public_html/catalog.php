@@ -1,6 +1,8 @@
 <?php
 require_once "../config/constants.php";
 require_once "../config/fuction.php";
+
+$text = $_GET["text"] ?? "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +35,7 @@ require_once "../config/fuction.php";
     <div class="header__icons">
         <a href="#"><i class="material-icons">home</i></a>
         <a href="catalog.html"><i class="material-icons">apps</i></a>
-        <a href="login.html"><i class="material-icons display-this">account_circle</i></a>
+        <a href="login.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->
@@ -79,7 +81,10 @@ require_once "../config/fuction.php";
     <div class="videos">
         <div class="videos__container">
             <?php
-            $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, VIDEO);
+            if ($text === "")
+                $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, VIDEO);
+            else
+                $medias = cercaNome($text);
 
             while ($media = array_shift($medias)) {
                 $titolo = $media['titolo'];
