@@ -101,7 +101,6 @@ $text = $_GET["text"] ?? "";
                     $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
                 $username_creator = $media['username'];
                 $creation_date = $media['creation_date'];
-                $views = quantevisual($media['id']);
             ?>
             <!-- Single Video starts -->
             <a href="<?=$pathfile?>">
@@ -113,7 +112,7 @@ $text = $_GET["text"] ?? "";
                         <div class="title">
                             <h3><?=$titolo?></h3>
                             <a href=""><?=$username_creator?></a>
-                            <span><?=$views?> • <?=$creation_date?></span>
+                            <span><?=$creation_date?></span>
                         </div>
                     </div>
                 </div>

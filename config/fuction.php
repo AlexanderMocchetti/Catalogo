@@ -38,7 +38,7 @@ function mediaRecenti($nMedia, $tipo){
     $mediaList = array();
     global $conn;
     if($tipo===0){
-        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
+        $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                     media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
                                     ORDER BY media.id DESC LIMIT $nMedia");
@@ -48,7 +48,7 @@ function mediaRecenti($nMedia, $tipo){
             }
         }
     }else{
-        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
+        $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                     media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
                                     WHERE media.id_tipo=$tipo ORDER BY media.id DESC LIMIT $nMedia");
@@ -103,7 +103,7 @@ function delete( $id) {
 function cercaNome($titolo){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
+    $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                     media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
                                 WHERE media.titolo LIKE '%$titolo%'");
@@ -151,7 +151,8 @@ function vedivisual($idutente){
     global $conn;
     $query = "SELECT media.titolo, media.pathfile
               FROM media JOIN cronologia ON media.id = cronologia.id_media
-              WHERE cronologia.id_utente = $idutente";
+              WHERE cronologia.id_utente = $idutente
+              ORDER BY cronologia.date";
     $result = $conn->query($query);
     if ($result->num_rows > 0) {
         $videovisti = array();

@@ -38,7 +38,7 @@ crono($user_id, get_media_id($pathfile));
     </div>
 
     <div class="header__search">
-        <form action=""> <!--TODO add action-->
+        <form action="/catalog.php"> <!--TODO add action-->
             <input placeholder="Cosa vuoi guardare?" class="search" name="text" type="text">
         </form>
     </div>
