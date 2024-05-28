@@ -1,7 +1,10 @@
 <?php
 session_start();
 
-if (!isset($_SESSION))
+if (!isset($_SESSION["user_id"])) {
+    header("Location: /login.php");
+    die;
+}
 
 require_once "../config/constants.php";
 require_once "../config/fuction.php";

@@ -21,6 +21,7 @@ function aggiungiUtente($user): bool{
     $username = $user["username"];
     $email = $user["email"];
     $password = $user["password"];
+    $password = md5($password);
     $sql="INSERT INTO utente(username,email,pass) VALUES('$username','$email','$password')";
     return $conn->query($sql);
 }
@@ -37,20 +38,20 @@ function mediaRecenti($nMedia, $tipo){
     $mediaList = array();
     global $conn;
     if($tipo===0){
-        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile
+        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                     media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
-                                    ORDER BY id DESC LIMIT $nMedia");
+                                    ORDER BY media.id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $mediaList[] = $row;
             }
         }
     }else{
-        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile
+        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                     media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
-                                    WHERE media.id_tipo=$tipo ORDER BY id DESC LIMIT $nMedia");
+                                    WHERE media.id_tipo=$tipo ORDER BY media.id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $mediaList[] = $row;
@@ -102,7 +103,7 @@ function delete( $id) {
 function cercaNome($titolo){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile
+    $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                     media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
                                 WHERE media.titolo LIKE '%$titolo%'");
@@ -116,7 +117,7 @@ function cercaNome($titolo){
 }
 function crono($user_id, $file_id) {
     global $conn;
-    $sql = "INSERT INTO cronologia (id_utente,id_media, data) VALUES ($user_id, $file_id, NOW())";
+    $sql = "INSERT INTO cronologia (id_utente,id_media, date) VALUES ($user_id, $file_id, NOW())";
     return $conn->query($sql);
 }
 function cercagenere($genere){

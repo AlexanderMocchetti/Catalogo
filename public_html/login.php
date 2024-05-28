@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "password" => $password
     );
 
-    if (presente($user)) {
+    if (!presente($user)) {
         $error_msg = true;
         $msg = "Utente non esistente";
     } else if ($user_id = credenzialiValide($user)) {
