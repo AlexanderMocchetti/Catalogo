@@ -150,7 +150,7 @@ function quantevisual($mediaId) {
 function vedivisual($idutente){
     global $conn;
     $query = "SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
-                                    media.image_pathfile as image_pathfile, creation_date
+                                    media.image_pathfile as image_pathfile, creation_date, date
               FROM media JOIN cronologia ON media.id = cronologia.id_media
               JOIN utente ON media.id_utente = utente.id
               WHERE cronologia.id_utente = $idutente

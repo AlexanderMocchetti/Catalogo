@@ -98,6 +98,7 @@ require_once "../config/fuction.php";
                     $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
                 $username_creator = $media['username'];
                 $creation_date = $media['creation_date'];
+                $date = $media['date'];
                 $views = quantevisual($media['id']);
             ?>
             <!-- Single Video starts -->
@@ -109,6 +110,7 @@ require_once "../config/fuction.php";
                     <div class="video__details">
                         <div class="title">
                             <h3><?=$titolo?></h3>
+                            <span>Visto in data: <?=$date?></span>
                             <a href=""><?=$username_creator?></a>
                             <span><?=$views?> Views • <?=$creation_date?></span>
                         </div>
