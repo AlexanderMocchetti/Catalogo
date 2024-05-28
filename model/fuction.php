@@ -6,7 +6,7 @@ function credenzialiValide($user): bool {
     $email = $user["email"];
     $password = $user["password"];
     $password = md5($password);
-    $result = $conn->query("SELECT id FROM utente WHERE email='$email' AND password='$password'");
+    $result = $conn->query("SELECT id FROM utente WHERE email='$email' AND pass='$password'");
     return $result->num_rows > 0;
 }
 function presente($user): bool{
@@ -21,7 +21,7 @@ function aggiungiUtente($user): bool{
     $username = $user["username"];
     $email = $user["email"];
     $password = $user["password"];
-    $sql="INSERT INTO utente(username,email,password) VALUES('$username','$email','$password')";
+    $sql="INSERT INTO utente(username,email,pass) VALUES('$username','$email','$password')";
     return $conn->query($sql);
 }
 
@@ -113,6 +113,35 @@ function cercagenere($genere){
     }
 
     return $mediaList;
+}
+
+function quantevisual($mediaId) {
+    global $conn;
+    $sql = "SELECT COUNT(*) as view_count FROM cronologia WHERE id_media = $mediaId";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['view_count'];
+    } else {
+        return 0;
+    }
+}
+
+
+
+function vedivisual($idutente){
+    global $conn;
+    $query = "SELECT media.titolo, media.pathfile
+              FROM media JOIN cronologia ON media.id = cronologia.id_media
+              WHERE cronologia.id_utente = $idutente";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $videovisti = array();
+        while ($row = $result->fetch_assoc()) {
+            $videovisti[] = $row;
+        }
+        return $videovisti;
+    }
 }
 
 ?>
