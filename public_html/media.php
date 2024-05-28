@@ -1,8 +1,19 @@
 <?php
+session_start();
+$user_id = $_SESSION["user_id"] ?? -1;
+
+if ($user_id === -1) {
+    header("Location: /login.php");
+    die;
+}
+
 require_once "../config/constants.php";
+require_once "../config/fuction.php";
+
 
 $titolo = $_GET['titolo'];
 $pathfile = '/assets/'.$_GET['pathfile'].'.mp4';
+crono($user_id, get_media_id($pathfile));
 ?>
 <!DOCTYPE html>
 <html lang="en">

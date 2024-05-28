@@ -1,15 +1,13 @@
 <?php
 require_once "connect.php";
 
-function credenzialiValide($user): bool|int {
+function credenzialiValide($user): bool {
     global $conn;
     $email = $user["email"];
     $password = $user["password"];
     $password = md5($password);
-    $result = $conn->query("SELECT id FROM utente WHERE email='$email' AND password='$password'");
-    if ($result->num_rows > 0)
-        return $result->fetch_assoc()["id"];
-    return false;
+    $result = $conn->query("SELECT id FROM utente WHERE email='$email' AND pass='$password'");
+    return $result->num_rows > 0;
 }
 function presente($user): bool{
     global $conn;
@@ -23,32 +21,36 @@ function aggiungiUtente($user): bool{
     $username = $user["username"];
     $email = $user["email"];
     $password = $user["password"];
-    $sql="INSERT INTO utente(username,email,password) VALUES('$username','$email','$password')";
+    $sql="INSERT INTO utente(username,email,pass) VALUES('$username','$email','$password')";
     return $conn->query($sql);
 }
 
-function mediaRecenti($nMedia, $tipo = 0){
+function get_media_id($pathfile) {
+    global $conn;
+    $sql = "SELECT id FROM media WHERE pathfile LIKE '$pathfile'";
+    $result = $conn -> query($sql);
+    return $result->fetch_assoc()["id"];
+}
+
+// TODO: add right returns
+function mediaRecenti($nMedia, $tipo){
     $mediaList = array();
     global $conn;
-
-    //TODO: add type return in query
     if($tipo===0){
-        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile, 
-                                    media.creation_date as creation_date, media.image_pathfile as image_pathfile, genere.nome as genere
-                                    FROM media JOIN utente on media.id_utente=utente.id
-                                    JOIN genere ON genere.id=media.id_genere
-                                    ORDER BY media.id DESC LIMIT $nMedia");
+        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile
+                                    media.image_pathfile as image_pathfile, creation_date
+                                    FROM media JOIN utente on media.id_utente=utente.id 
+                                    ORDER BY id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $mediaList[] = $row;
             }
         }
     }else{
-        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
-                                    media.creation_date as creation_date, media.image_pathfile as image_pathfile, genere.nome as genere
+        $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile
+                                    media.image_pathfile as image_pathfile, creation_date
                                     FROM media JOIN utente on media.id_utente=utente.id 
-                                    JOIN genere ON media.id_genere=genere.id
-                                    WHERE media.id_tipo=$tipo ORDER BY media.id DESC LIMIT $nMedia");
+                                    WHERE media.id_tipo=$tipo ORDER BY id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $mediaList[] = $row;
@@ -71,15 +73,21 @@ function mediaTotali(){
     return $mediaList;
 }
 
-function addMedia( $file_path, $id_tipo, $titolo, $id_ut, $id_gen, $data) {
+function addMedia( $file_path, $id_tipo, $titolo, $id_ut, $id_gen) {
     global $conn;
     $sql = "INSERT INTO media (id_utente, id_genere,pathfile, id_tipo, titolo, creation_date) 
-            VALUES ('$id_ut','$id_gen', '$file_path', $id_tipo, '$titolo','$data')";
+            VALUES ('$id_ut','$id_gen', '$file_path', $id_tipo, '$titolo', NOW())";
     if ($conn->query($sql) === TRUE) {
         return true;
     } else {
         return false;
     }
+}
+function addThumbnail($file_path) {
+    global $conn;
+    $last_id = $conn->insert_id;
+    $sql = "UPDATE media SET image_pathfile = $file_path WHERE id = $last_id";
+    return $conn->query($sql);
 }
 function delete( $id) {
     global $conn;
@@ -94,7 +102,10 @@ function delete( $id) {
 function cercaNome($titolo){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media WHERE media.titolo='$titolo'");
+    $result = $conn->query("SELECT media.titolo as titolo, utente.username as username, media.pathfile as pathfile
+                                    media.image_pathfile as image_pathfile, creation_date
+                                    FROM media JOIN utente on media.id_utente=utente.id 
+                                WHERE media.titolo LIKE '%$titolo%'");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $mediaList[] = $row;
@@ -105,8 +116,6 @@ function cercaNome($titolo){
 }
 function crono($user_id, $file_id) {
     global $conn;
-    $user_id;
-    $file_id;
     $sql = "INSERT INTO cronologia (id_utente,id_media, data) VALUES ($user_id, $file_id, NOW())";
     return $conn->query($sql);
 }
@@ -121,6 +130,69 @@ function cercagenere($genere){
     }
 
     return $mediaList;
+}
+
+function quantevisual($mediaId) {
+    global $conn;
+    $sql = "SELECT COUNT(*) as view_count FROM cronologia WHERE id_media = $mediaId";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['view_count'];
+    } else {
+        return 0;
+    }
+}
+
+
+
+function vedivisual($idutente){
+    global $conn;
+    $query = "SELECT media.titolo, media.pathfile
+              FROM media JOIN cronologia ON media.id = cronologia.id_media
+              WHERE cronologia.id_utente = $idutente";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $videovisti = array();
+        while ($row = $result->fetch_assoc()) {
+            $videovisti[] = $row;
+        }
+        return $videovisti;
+    }
+    return false;
+}
+
+function vediTipi()
+{
+    global $conn;
+    $query = "SELECT id, nome 
+              FROM tipo;
+    ";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $tipi = array();
+        while ($row = $result->fetch_assoc()) {
+            $tipi[] = $row;
+        }
+        return $tipi;
+    }
+    return false;
+}
+
+function vediGeneri()
+{
+    global $conn;
+    $query = "SELECT id, nome
+              FROM genere";
+    $result = $conn->query($query);
+    if ($result->num_rows > 0) {
+        $generi = array();
+        while ($row = $result->fetch_assoc()) {
+            $generi[] = $row;
+        }
+        return $generi;
+    }
+    return false;
 }
 
 ?>

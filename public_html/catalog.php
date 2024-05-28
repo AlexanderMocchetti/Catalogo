@@ -1,4 +1,8 @@
 <?php
+session_start();
+
+if (!isset($_SESSION))
+
 require_once "../config/constants.php";
 require_once "../config/fuction.php";
 

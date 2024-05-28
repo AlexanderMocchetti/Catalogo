@@ -8,6 +8,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["username"];
     $email = $_POST["email"];
     $password = $_POST["password"];
+
+    $user = array(
+            "username" => $username,
+            "email" => $email,
+            "password" => $password
+    );
+
+    if (presente($user)) {
+        $error_msg = true;
+        $msg = "Utente esistente";
+    } else {
+        aggiungiUtente($user);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -58,6 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <p>Hai già un account?<a href="login.php" id="login"> Login</a></p>
             </form>
+            <p><?php
+            if ($error_msg)
+                echo $msg;
+                ?></p>
         </div>
     </div>
 </body>

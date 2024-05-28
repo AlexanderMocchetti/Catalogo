@@ -85,9 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p>Non hai un account?<a href="register.php" id="register"> Registrati</a></p>
             </form>
             <p><?php
-                if ($error_msg) {
+                if ($error_msg)
                     echo $msg;
-                }
                 ?></p>
         </div>
     </div>
