@@ -105,6 +105,7 @@ require_once "../config/fuction.php";
                 $creation_date = $media['creation_date'];
                 $date = $media['date'];
                 $views = quantevisual($media['id']);
+                $gen = $media["genere"]
             ?>
             <!-- Single Video starts -->
             <a href="<?=$pathfile?>">
@@ -116,7 +117,8 @@ require_once "../config/fuction.php";
                         <div class="title">
                             <h3><?=$titolo?></h3>
                             <span>Visto in data: <?=$date?></span>
-                            <a href=""><?=$username_creator?></a>
+                            <span><?=$username_creator?></span>
+                            <span><?=$gen?></span>
                             <span><?=$views?> Views • <?=$creation_date?></span>
                         </div>
                     </div>

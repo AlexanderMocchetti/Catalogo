@@ -13,7 +13,7 @@ require_once "../config/fuction.php";
 
 $titolo = $_GET['titolo'];
 
-$tipo = get_media_id($_GET["pathfile"]);
+$tipo = get_media_type($_GET["pathfile"]);
 
 $pathfile = '/assets/'.$_GET['pathfile'];
 
