@@ -11,7 +11,7 @@ require_once "../config/fuction.php";
 
 $text = $_GET["text"] ?? "";
 $tipo = $GET["tipo"] ?? 0;
-$filter = $_GET["filter"] ?? "";
+$current_genere = $_GET["genere"] ?? 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,8 +43,7 @@ $filter = $_GET["filter"] ?? "";
 
     <div class="header__icons">
         <a href="#"><i class="material-icons">home</i></a>
-        <a href="catalog.html"><i class="material-icons">apps</i></a>
-        <a href="login.php"><i class="material-icons display-this">account_circle</i></a>
+        <a href="/profilo.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->
@@ -74,18 +73,21 @@ $filter = $_GET["filter"] ?? "";
         </div>
         <hr />
         <div class="sidebar__categories">
-            <div class="sidebar__category">
-                <i class="material-icons">local_fire_department</i>
-                <span>I più popolari</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">recommend</i>
-                <span>I più acclamati dalla critica</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">priority_high</i>
-                <span>Da non perdere</span>
-            </div>
+            <?php
+            if ($generi = vediGeneri())  {
+                foreach ($generi as $genere) {
+                    $genere_id = $genere["id"];
+                    $genere_nome = $genere["nome"];
+            ?>
+            <a href="/catalog.php?genere=<?=$genere_id?>">
+                <div class="sidebar__category">
+                    <span><?=$genere_nome?></span>
+                </div>
+            </a>
+            <?php
+                }
+            }
+            ?>
         </div>
         <hr />
     </div>
@@ -94,7 +96,9 @@ $filter = $_GET["filter"] ?? "";
     <div class="videos">
         <div class="videos__container">
             <?php
-            if ($text === "")
+            if ($current_genere != 0)
+                $medias = cercagenere($current_genere);
+            else if($text === "")
                 $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, $tipo);
             else
                 $medias = cercaNome($text);
@@ -109,7 +113,6 @@ $filter = $_GET["filter"] ?? "";
                 $creation_date = $media['creation_date'];
                 $views = quantevisual($media['id']);
             ?>
-            <!-- Single Video starts -->
             <a href="<?=$pathfile?>">
                 <div class="video">
                     <div class="video__thumbnail">
@@ -118,45 +121,15 @@ $filter = $_GET["filter"] ?? "";
                     <div class="video__details">
                         <div class="title">
                             <h3><?=$titolo?></h3>
-                            <a href=""><?=$username_creator?></a>
+                            <span><?=$username_creator?></span>
                             <span><?=$views?> Views • <?=$creation_date?></span>
                         </div>
                     </div>
                 </div>
             </a>
-            <!-- Single Video Ends -->
             <?php
             }
             ?>
-
-            <!-- Single Video starts -->
-            <div class="video">
-                <div class="video__thumbnail">
-                    <img src="https://img.youtube.com/vi/YpTmcCBBdTE/maxresdefault.jpg" alt="" />
-                </div>
-                <div class="video__details">
-                    <div class="title">
-                        <h3>Build A Password Generator with React JS - Beginners Tutorial</h3>
-                        <a href="">FutureCoders</a>
-                        <span>10M Views • 3 Months Ago</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Single Video Ends -->
-
-            <div class="video">
-                <div class="video__thumbnail">
-                    <img src="https://img.youtube.com/vi/46cXFUzR9XM/maxresdefault.jpg" alt="" />
-                </div>
-                <div class="video__details">
-                </div>
-                <div class="title">
-                    <h3>Bella Ciao Full Song | La Casa De Papel | Money Heist | Netflix India</h3>
-                    <a href="">Netflix</a>
-                    <span>10M Views • 11 Months Ago</span>
-                </div>
-            </div>
-        </div>
     </div>
 
 

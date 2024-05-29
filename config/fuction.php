@@ -39,8 +39,9 @@ function mediaRecenti($nMedia, $tipo){
     global $conn;
     if($tipo===0){
         $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
-                                    media.image_pathfile as image_pathfile, creation_date
+                                    media.image_pathfile as image_pathfile, creation_date, genere.nome as genere
                                     FROM media JOIN utente on media.id_utente=utente.id 
+                                    JOIN genere ON genere.id = media.id_genere
                                     ORDER BY media.id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -49,8 +50,9 @@ function mediaRecenti($nMedia, $tipo){
         }
     }else{
         $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
-                                    media.image_pathfile as image_pathfile, creation_date
+                                    media.image_pathfile as image_pathfile, creation_date, genere.nome as genere
                                     FROM media JOIN utente on media.id_utente=utente.id 
+                                    JOIN genere ON genere.id = media.id_genere
                                     WHERE media.id_tipo=$tipo ORDER BY media.id DESC LIMIT $nMedia");
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -104,8 +106,9 @@ function cercaNome($titolo){
     $mediaList = array();
     global $conn;
     $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
-                                    media.image_pathfile as image_pathfile, creation_date
+                                    media.image_pathfile as image_pathfile, creation_date, genere.nome as genere
                                     FROM media JOIN utente on media.id_utente=utente.id 
+                                    JOIN genere ON genere.id = media.id_genere
                                 WHERE media.titolo LIKE '%$titolo%'");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -120,10 +123,12 @@ function crono($user_id, $file_id) {
     $sql = "INSERT INTO cronologia (id_utente,id_media, date) VALUES ($user_id, $file_id, NOW())";
     return $conn->query($sql);
 }
-function cercagenere($genere){
+function cercagenere($id_genere){
     $mediaList = array();
     global $conn;
-    $result = $conn->query("SELECT media.titolo, media.pathfile FROM media JOIN genere on media.id_genere=genere.id WHERE genere.nome='$genere'");
+    $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
+                                media.image_pathfile as image_pathfile, creation_date, genere.nome as genere
+                                FROM media JOIN genere on media.id_genere=genere.id WHERE genere.id='$id_genere'");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $mediaList[] = $row;
@@ -150,9 +155,10 @@ function quantevisual($mediaId) {
 function vedivisual($idutente){
     global $conn;
     $query = "SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
-                                    media.image_pathfile as image_pathfile, creation_date, date
+                                    media.image_pathfile as image_pathfile, creation_date, date, genere.nome as genere
               FROM media JOIN cronologia ON media.id = cronologia.id_media
               JOIN utente ON media.id_utente = utente.id
+              JOIN genere ON genere.id = media.id_genere
               WHERE cronologia.id_utente = $idutente
               ORDER BY cronologia.date";
     $result = $conn->query($query);

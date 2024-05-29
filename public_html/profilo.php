@@ -13,7 +13,15 @@ require_once "../config/fuction.php";
 require_once "../config/constants.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $upload_name = md5_file($_FILES["media"]["tmp_name"]).".mp4";
+    $upload_name = md5_file($_FILES["media"]["tmp_name"]);
+    switch($_POST["tipo"]) {
+        case VIDEO:
+            $upload_name .= ".mp4";
+            break;
+        case AUDIO:
+            $upload_name .= ".mp3";
+            break;
+    }
     $upload_file = UPLOAD_DIR . "/" . $upload_name;
 
     addMedia($upload_file, $_POST["tipo"], $_FILES["media"]["name"], $user_id, $_POST["genere"]);
@@ -43,14 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
-        <a href="#">
+        <a href="/catalog.php"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="/catalog.php">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>
 
     <div class="header__search">
-        <form action=""> <!--TODO add action-->
+        <form action="/catalog.php"> <!--TODO add action-->
             <input placeholder="Cosa vuoi guardare?" class="search" name="text" type="text">
         </form>
     </div>
