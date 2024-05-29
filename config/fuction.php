@@ -35,7 +35,7 @@ function get_media_id($pathfile) {
 
 function get_media_type($pathfile) {
     global $conn;
-    $sql = "SELECT tipo.nome as tipo
+    $sql = "SELECT tipo.id as tipo
             FROM tipo JOIN media ON media.id_tipo = tipo.id
             WHERE media.pathfile LIKE '$pathfile'";
     $result = $conn->query($sql);

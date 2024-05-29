@@ -122,9 +122,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <form method="POST" enctype="multipart/form-data" class="uploads">
         <input type="hidden" name="MAX_FILE_SIZE" value="2000000000">
-        <label for="uploadBtn">Carica media</label>
+        <label for="uploadBtn" class="btn">Carica media</label>
         <input type="file" id="uploadBtn" name="media">
-        <label for="thumbnailBtn">Carica thumbnail</label>
+        <label for="thumbnailBtn" class="btn">Carica thumbnail</label>
         <input type="file" id="thumbnailBtn" name="thumbnail">
         <?php
 
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "</fieldset>";
         }
         ?>
-        <button type="submit">Carica</button>
+        <button type="submit" class="submit">Carica</button>
     </form>
 
 </body>
