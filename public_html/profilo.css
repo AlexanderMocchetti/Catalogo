@@ -157,19 +157,32 @@ hr {
     border: none;
 }
 
-.mainBody h2{
+
+.mainBody h2 {
     color: #cfcece;
     margin-left: 20px;
     margin-top: 30px;
 }
 
-input[type="file"]{
-    display: none;
+.uploads {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    margin: 30px 20px;
 }
 
-label{
-    margin-top: 90px;
-    position: absolute;
+.uploads select {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #333333;
+    border: 1px solid #555555;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+label.btn {
+    margin-top: 10px;
     color: #cfcece;
     background: #515050;
     text-align: center;
@@ -179,10 +192,52 @@ label{
     cursor: pointer;
     box-shadow: 2px 3px 4px #fff;
     border-radius: 3px;
+    display: inline-block;
 }
 
-label:hover{
+label.btn:hover {
     background: #7c7c7c;
     transition: all 0.3s ease;
     color: #fff;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input[type="submit"]{
+    display: none;
+}
+
+label.submit{
+    margin-top: 10px;
+    color: #cfcece;
+    background: #515050;
+    text-align: center;
+    padding: 15px 40px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    box-shadow: 2px 3px 4px #fff;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+label.submit:hover {
+    background: #7c7c7c;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.uploads fieldset {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+    color: #cfcece;
+    border-color: transparent;
+}
+
+.uploads label {
+    margin-right: 10px;
 }

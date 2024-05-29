@@ -43,6 +43,7 @@ $current_genere = $_GET["genere"] ?? 0;
 
     <div class="header__icons">
         <a href="/catalog.php"><i class="material-icons">home</i></a>
+        <a href="/history.php"><i class="material-icons">history</i></a>
         <a href="/profilo.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
