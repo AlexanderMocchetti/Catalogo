@@ -1,5 +1,4 @@
 <?php
-//TODO: rename fuction.php
 require_once "../config/fuction.php";
 
 $error_msg = false;
@@ -38,16 +37,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
-        <a href="#">
+        <a href="/catalog.php"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="/catalog.php">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>
 
     <div class="header__icons">
-        <a href="catalog.php"><i class="material-icons">home</i></a>
-        <a href="catalog.php"><i class="material-icons">apps</i></a>
-        <a href="login.php"><i class="material-icons display-this">account_circle</i></a>
+        <a href="/catalog.php"><i class="material-icons">home</i></a>
+        <a href="/profilo.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->

@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// TODO: change location from .php file to route
 if (isset($_SESSION["user_id"])) {
     header("Location: /catalog.php");
     die;
@@ -48,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
-        <a href="#">
+        <a href="/catalog.php"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="/catalog.php">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>
@@ -60,11 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
     </div> -->
 
-    <div class="header__icons">
-        <a href="catalog.php"><i class="material-icons">home</i></a>
-        <a href="catalog.php"><i class="material-icons">apps</i></a>
-        <a href="login.html"><i class="material-icons display-this">account_circle</i></a>
-    </div>
 </div>
 <!-- Header Ends -->
 

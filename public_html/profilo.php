@@ -13,18 +13,22 @@ require_once "../config/fuction.php";
 require_once "../config/constants.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $upload_name = md5_file($_FILES["media"]["tmp_name"]);
+    $upload_hash = md5_file($_FILES["media"]["tmp_name"]);
+    $upload_name = $upload_hash;
+    $titolo = "";
     switch($_POST["tipo"]) {
         case VIDEO:
+            $titolo = basename($_FILES["media"]["name"], ".mp4");
             $upload_name .= ".mp4";
             break;
         case AUDIO:
+            $titolo = basename($_FILES["media"]["name"], ".mp3");
             $upload_name .= ".mp3";
             break;
     }
+    addMedia($upload_hash, $_POST["tipo"], $titolo, $user_id, $_POST["genere"]);
     $upload_file = UPLOAD_DIR . "/" . $upload_name;
 
-    addMedia($upload_file, $_POST["tipo"], $_FILES["media"]["name"], $user_id, $_POST["genere"]);
     move_uploaded_file($_FILES["media"]["tmp_name"], $upload_file);
 
     if (isset($_FILES["thumbnail"])) {
@@ -64,10 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <div class="header__icons">
-        <a href="#"><i class="material-icons">home</i></a>
-        <a href="catalog.php"><i class="material-icons">apps</i></a>
-        <a href="login.php"><i class="material-icons">login</i></a>
-        <a href="profilo.php"><i class="material-icons display-this">account_circle</i></a>
+        <a href="/catalog.php"><i class="material-icons">home</i></a>
+        <a href="/profilo.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->
@@ -78,14 +80,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div class="sidebar">
         <div class="sidebar__categories">
-            <div class="sidebar__category">
-                <i class="material-icons">movie</i>
-                <span>Film</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">music_note</i>
-                <span>Musica</span>
-            </div>
+            <a href="/catalog.php?tipo=<?=VIDEO?>">
+                <div class="sidebar__category">
+                    <i class="material-icons">movie</i>
+                    <span>Film</span>
+                </div>
+            </a>
+            <a href="/catalog.php?tipo=<?=AUDIO?>">
+                <div class="sidebar__category">
+                    <i class="material-icons">music_note</i>
+                    <span>Musica</span>
+                </div>
+            </a>
             <div class="sidebar__category">
                 <i class="material-icons">upcoming</i>
                 <span>In arrivo...</span>
@@ -93,26 +99,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
         <hr />
         <div class="sidebar__categories">
-            <div class="sidebar__category">
-                <i class="material-icons">history</i>
-                <a href="cronologia.html"><span>Cronologia</span></a>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">recommend</i>
-                <span>I più acclamati dalla critica</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">local_fire_department</i>
-                <span>Da non perdere</span>
-            </div>
+            <?php
+            if ($generi = vediGeneri())  {
+                foreach ($generi as $genere) {
+                    $genere_id = $genere["id"];
+                    $genere_nome = $genere["nome"];
+                    ?>
+                    <a href="/catalog.php?genere=<?=$genere_id?>">
+                        <div class="sidebar__category">
+                            <span><?=$genere_nome?></span>
+                        </div>
+                    </a>
+                    <?php
+                }
+            }
+            ?>
         </div>
         <hr />
     </div>
-
     <h2>Vuoi pubblicare qualcosa?</h2>
 
     <form method="POST" enctype="multipart/form-data" class="uploads">
-        <input type="hidden" name="MAX_FILE_SIZE" value="2000000000"
+        <input type="hidden" name="MAX_FILE_SIZE" value="2000000000">
         <label for="uploadBtn">Carica media</label>
         <input type="file" id="uploadBtn" name="media">
         <label for="thumbnailBtn">Carica thumbnail</label>

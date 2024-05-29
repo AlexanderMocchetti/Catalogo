@@ -12,7 +12,20 @@ require_once "../config/fuction.php";
 
 
 $titolo = $_GET['titolo'];
-$pathfile = '/assets/'.$_GET['pathfile'].'.mp4';
+
+$tipo = get_media_id($_GET["pathfile"]);
+
+$pathfile = '/assets/'.$_GET['pathfile'];
+
+switch ($tipo) {
+    case VIDEO:
+        $pathfile .= ".mp4";
+        break;
+    case AUDIO:
+        $pathfile .= ".mp3";
+        break;
+}
+
 crono($user_id, get_media_id($_GET["pathfile"]));
 ?>
 <!DOCTYPE html>
@@ -44,9 +57,8 @@ crono($user_id, get_media_id($_GET["pathfile"]));
     </div>
 
     <div class="header__icons">
-        <a href="#"><i class="material-icons">home</i></a>
-        <a href="catalog.php"><i class="material-icons">apps</i></a>
-        <a href="login.php"><i class="material-icons display-this">account_circle</i></a>
+        <a href="/catalog.php"><i class="material-icons">home</i></a>
+        <a href="/profilo.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
 <!-- Header Ends -->
@@ -54,17 +66,20 @@ crono($user_id, get_media_id($_GET["pathfile"]));
 <!-- Main Body Starts -->
 <div class="mainBody">
     <!-- Sidebar Starts -->
-
     <div class="sidebar">
         <div class="sidebar__categories">
-            <div class="sidebar__category">
-                <i class="material-icons">movie</i>
-                <span>Film</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">music_note</i>
-                <span>Musica</span>
-            </div>
+            <a href="/catalog.php?tipo=<?=VIDEO?>">
+                <div class="sidebar__category">
+                    <i class="material-icons">movie</i>
+                    <span>Film</span>
+                </div>
+            </a>
+            <a href="/catalog.php?tipo=<?=AUDIO?>">
+                <div class="sidebar__category">
+                    <i class="material-icons">music_note</i>
+                    <span>Musica</span>
+                </div>
+            </a>
             <div class="sidebar__category">
                 <i class="material-icons">upcoming</i>
                 <span>In arrivo...</span>
@@ -72,18 +87,21 @@ crono($user_id, get_media_id($_GET["pathfile"]));
         </div>
         <hr />
         <div class="sidebar__categories">
-            <div class="sidebar__category">
-                <i class="material-icons">local_fire_department</i>
-                <span>I più popolari</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">recommend</i>
-                <span>I più acclamati dalla critica</span>
-            </div>
-            <div class="sidebar__category">
-                <i class="material-icons">priority_high</i>
-                <span>Da non perdere</span>
-            </div>
+            <?php
+            if ($generi = vediGeneri())  {
+                foreach ($generi as $genere) {
+                    $genere_id = $genere["id"];
+                    $genere_nome = $genere["nome"];
+                    ?>
+                    <a href="/catalog.php?genere=<?=$genere_id?>">
+                        <div class="sidebar__category">
+                            <span><?=$genere_nome?></span>
+                        </div>
+                    </a>
+                    <?php
+                }
+            }
+            ?>
         </div>
         <hr />
     </div>

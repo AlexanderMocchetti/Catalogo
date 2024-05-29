@@ -33,6 +33,15 @@ function get_media_id($pathfile) {
     return $result->fetch_assoc()["id"];
 }
 
+function get_media_type($pathfile) {
+    global $conn;
+    $sql = "SELECT tipo.nome as tipo
+            FROM tipo JOIN media ON media.id_tipo = tipo.id
+            WHERE media.pathfile LIKE '$pathfile'";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc()["tipo"];
+}
+
 // TODO: add right returns
 function mediaRecenti($nMedia, $tipo){
     $mediaList = array();
@@ -89,7 +98,7 @@ function addMedia( $file_path, $id_tipo, $titolo, $id_ut, $id_gen) {
 function addThumbnail($file_path) {
     global $conn;
     $last_id = $conn->insert_id;
-    $sql = "UPDATE media SET image_pathfile = $file_path WHERE id = $last_id";
+    $sql = "UPDATE media SET image_pathfile = '$file_path' WHERE id = $last_id";
     return $conn->query($sql);
 }
 function delete( $id) {
@@ -128,7 +137,10 @@ function cercagenere($id_genere){
     global $conn;
     $result = $conn->query("SELECT media.id as id, media.titolo as titolo, utente.username as username, media.pathfile as pathfile,
                                 media.image_pathfile as image_pathfile, creation_date, genere.nome as genere
-                                FROM media JOIN genere on media.id_genere=genere.id WHERE genere.id='$id_genere'");
+                                FROM media 
+                                JOIN genere on media.id_genere=genere.id 
+                                JOIN utente on media.id_utente=utente.id
+                                WHERE media.id_genere=$id_genere");
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $mediaList[] = $row;

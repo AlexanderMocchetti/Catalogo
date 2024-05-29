@@ -10,7 +10,7 @@ require_once "../config/constants.php";
 require_once "../config/fuction.php";
 
 $text = $_GET["text"] ?? "";
-$tipo = $GET["tipo"] ?? 0;
+$tipo = $_GET["tipo"] ?? 0;
 $current_genere = $_GET["genere"] ?? 0;
 ?>
 <!DOCTYPE html>
@@ -29,8 +29,8 @@ $current_genere = $_GET["genere"] ?? 0;
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
-        <a href="#">
+        <a href="/catalog.php"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="/catalog.php">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>
@@ -42,7 +42,7 @@ $current_genere = $_GET["genere"] ?? 0;
     </div>
 
     <div class="header__icons">
-        <a href="#"><i class="material-icons">home</i></a>
+        <a href="/catalog.php"><i class="material-icons">home</i></a>
         <a href="/profilo.php"><i class="material-icons display-this">account_circle</i></a>
     </div>
 </div>
@@ -96,9 +96,9 @@ $current_genere = $_GET["genere"] ?? 0;
     <div class="videos">
         <div class="videos__container">
             <?php
-            if ($current_genere != 0)
+            if ($current_genere !== 0)
                 $medias = cercagenere($current_genere);
-            else if($text === "")
+            else if ($text === "")
                 $medias = mediaRecenti(NUMBER_OF_VIDEOS_PER_PAGE, $tipo);
             else
                 $medias = cercaNome($text);
@@ -106,12 +106,16 @@ $current_genere = $_GET["genere"] ?? 0;
             while ($media = array_shift($medias)) {
                 $titolo = $media['titolo'];
                 $pathfile = 'media/'.$titolo.'-'.$media['pathfile'];
+
                 $image_pathfile = $media['image_pathfile'];
                 if ($image_pathfile === null)
                     $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
+                else
+                    $image_pathfile = "/assets/" . $image_pathfile;
                 $username_creator = $media['username'];
                 $creation_date = $media['creation_date'];
                 $views = quantevisual($media['id']);
+                $gen = $media["genere"];
             ?>
             <a href="<?=$pathfile?>">
                 <div class="video">
@@ -122,6 +126,7 @@ $current_genere = $_GET["genere"] ?? 0;
                         <div class="title">
                             <h3><?=$titolo?></h3>
                             <span><?=$username_creator?></span>
+                            <span><?=$gen?></span>
                             <span><?=$views?> Views • <?=$creation_date?></span>
                         </div>
                     </div>
