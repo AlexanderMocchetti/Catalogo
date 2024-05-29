@@ -44,8 +44,8 @@ crono($user_id, get_media_id($_GET["pathfile"]));
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="/images/Logo%20Huborto.png" alt="Logo"></a>
-        <a href="#">
+        <a href="/catalog.php"><img src="/images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="/catalog.php">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>

@@ -28,8 +28,8 @@ require_once "../config/fuction.php";
 <div class="header">
     <div class="header__left">
         <!-- <i id="menu" class="material-icons">menu</i> -->
-        <a href="#"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
-        <a href="#">
+        <a href="/catalog.php"><img src="images/Logo%20Huborto.png" alt="Logo"></a>
+        <a href="/catalog.php">
             <h1>Hub<span>orto</span></h1>
         </a>
     </div>
@@ -102,6 +102,8 @@ require_once "../config/fuction.php";
                 $image_pathfile = $media['image_pathfile'];
                 if ($image_pathfile === null)
                     $image_pathfile = DEFAULT_IMAGE_THUMBNAIL;
+                else
+                    $image_pathfile = "/assets/" . $image_pathfile;
                 $username_creator = $media['username'];
                 $creation_date = $media['creation_date'];
                 $date = $media['date'];
@@ -129,34 +131,6 @@ require_once "../config/fuction.php";
             <?php
             }
             ?>
-
-            <!-- Single Video starts -->
-            <div class="video">
-                <div class="video__thumbnail">
-                    <img src="https://img.youtube.com/vi/YpTmcCBBdTE/maxresdefault.jpg" alt="" />
-                </div>
-                <div class="video__details">
-                    <div class="title">
-                        <h3>Build A Password Generator with React JS - Beginners Tutorial</h3>
-                        <a href="">FutureCoders</a>
-                        <span>10M Views • 3 Months Ago</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Single Video Ends -->
-
-            <div class="video">
-                <div class="video__thumbnail">
-                    <img src="https://img.youtube.com/vi/46cXFUzR9XM/maxresdefault.jpg" alt="" />
-                </div>
-                <div class="video__details">
-                </div>
-                <div class="title">
-                    <h3>Bella Ciao Full Song | La Casa De Papel | Money Heist | Netflix India</h3>
-                    <a href="">Netflix</a>
-                    <span>10M Views • 11 Months Ago</span>
-                </div>
-            </div>
         </div>
     </div>
 
