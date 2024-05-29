@@ -29,6 +29,7 @@
     <div class="header__icons">
         <a href="#"><i class="material-icons">home</i></a>
         <a href="catalog.html"><i class="material-icons">apps</i></a>
+        <a href="cronologia.html"><i class="material-icons">history</i></a>
         <a href="login.html"><i class="material-icons">login</i></a>
         <a href="profilo.html"><i class="material-icons display-this">account_circle</i></a>
     </div>
@@ -72,11 +73,36 @@
         <hr />
     </div>
 
-    <h2>Vuoi pubblicare qualcosa?</h2>
+    <div class="content">
+        <h2>Vuoi pubblicare qualcosa?</h2>
+        <div class="uploads">
+            <input type="file" id="uploadBtn">
+            <label for="uploadBtn" class="btn">Carica media</label>
 
-    <div class="uploads">
-        <input type="file" id="uploadBtn">
-        <label for="uploadBtn">Carica file</label>
+            <select name="genere" required="">
+                <option value="1">vlog</option>
+                <option value="2">gaming</option>
+                <option value="3">animation</option>
+                <option value="4">commentary</option>
+                <option value="5">western</option>
+                <option value="6">horror</option>
+                <option value="7">action</option>
+                <option value="8">ad</option>
+            </select>
+
+            <input type="file" id="thumbnailBtn">
+            <label for="thumbnailBtn" class="btn">Carica thumbnail</label>
+
+            <fieldset>
+                <input type="radio" id="video" name="tipo" value="1" required>
+                <label for="video">video</label>
+                <input type="radio" id="audio" name="tipo" value="2" required>
+                <label for="audio">audio</label>
+            </fieldset>
+
+            <input type="submit" id="submit">
+            <label for="submit" class="submit">Pubblica</label>
+        </div>
     </div>
 
 </body>
