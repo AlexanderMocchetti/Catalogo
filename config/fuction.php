@@ -1,13 +1,13 @@
 <?php
 require_once "connect.php";
 
-function credenzialiValide($user): bool {
+function credenzialiValide($user): int {
     global $conn;
     $email = $user["email"];
     $password = $user["password"];
     $password = md5($password);
     $result = $conn->query("SELECT id FROM utente WHERE email='$email' AND pass='$password'");
-    return $result->num_rows > 0;
+    return $result->fetch_assoc()["id"];
 }
 function presente($user): bool{
     global $conn;

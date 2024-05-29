@@ -1,6 +1,3 @@
 # Catalogo video
 
-### Cartelle:
-* *html_template* -> contiene i file html da usare come template
-  * *js*
-  * *css*
+### Sito: [https://catalogo.fantagita.site](https://catalogo.fantagita.site)
